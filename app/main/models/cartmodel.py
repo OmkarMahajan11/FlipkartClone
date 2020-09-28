@@ -1,6 +1,6 @@
 from ...main import db
 
-class Cart(db.Model):
+class CartModel(db.Model):
     __tablename__ = "cart"
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey("products.id", ondelete="CASCADE"))

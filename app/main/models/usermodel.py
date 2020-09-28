@@ -1,6 +1,6 @@
 from ...main import db 
 
-class User(db.Model):
+class UserModel(db.Model):
     __tablename__ = "users"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -33,14 +33,14 @@ class Address(db.Model):
     locality = db.Column(db.String(70))
     pincode = db.Column(db.String(10),nullable=False)    
 
-    def __init__(self,jsn,user_id):
+    def __init__(self, user_id, jsn):
         self.user_id = user_id
         self.name = jsn['name']
         self.phone = jsn['mobile_no']
         self.country = jsn['country']
-        self.state = jsn['state/ut']
+        self.state = jsn['state']
         self.district = jsn['district']
-        self.city_village = jsn['city/village']
+        self.city = jsn['city']
         self.locality = jsn['locality']
         self.pincode = jsn['pincode']
 
