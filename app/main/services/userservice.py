@@ -50,7 +50,7 @@ def delete_user(auth_code, jsn):
     auth_decode = jwt.decode(auth_code, current_app.config["SECRET_KEY"])
     if auth_decode["time"] < time:
         return "session expired, please login again"
-    if auth_code["access"] = "admin":
+    if auth_code["access"] == "admin":
         user = UserModel.query.filter_by(email=jsn["email"]).first()
         if not user:
             return "no such user"
@@ -92,7 +92,7 @@ def address_edit(auth_code, jsn):
     db.session.commit()
     return "adress modified"    
 
-def address_edit(auth_code, jsn):
+def address_add(auth_code, jsn):
     auth_decode = jwt.decode(auth_code, current_app.config["SECRET_KEY"])
     if auth_decode["time"] < time.time():
         return "session expired, please login again"

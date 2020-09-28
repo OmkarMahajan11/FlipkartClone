@@ -1,9 +1,8 @@
 from flask import Blueprint
 from flask import request
-import json
-from ..services.userservice import *
+from ..services.userservice import register_user, login_user, delete_user, address_add, address_edit, address_list
 
-user = Blueprint("users", __name__)
+user = Blueprint("user", __name__)
 
 @user.route("/register", methods=["POST"])
 def register():
