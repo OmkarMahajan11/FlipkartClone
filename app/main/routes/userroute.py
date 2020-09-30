@@ -39,7 +39,7 @@ def add_address():
     res = address_add(auth_code, jsn)
     return {"result":res}
 
-@user.route("/address/edit", method=["POST"])
+@user.route("/address/edit", methods=["POST"])
 def edit_address():
     '''
     edit existing user address
@@ -49,7 +49,7 @@ def edit_address():
     res = address_edit(auth_code, jsn)
     return {"result":res}
 
-@user.route("/address/list")
+@user.route("/address/list", methods=["GET"])
 def list_address():
     auth_code = request.headers["auth_code"]
     res = address_list(auth_code)

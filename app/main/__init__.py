@@ -11,8 +11,8 @@ def create_app(env):
     app.config.from_object(app_config[env])
     app.config.from_pyfile("config.py")
     db.init_app(app)
-    app.register_blueprint(user_blueprint, user_prefix="/user")
-    app.register_blueprinnt(category_blueprint, user_prefix="/category")
-    app.register_blueprinnt(product_blueprint, user_prefix="/product")
+    app.register_blueprint(user_blueprint, url_prefix="/user")
+    app.register_blueprint(category_blueprint, url_prefix="/category")
+    app.register_blueprint(product_blueprint, url_prefix="/product")
     
     return app
