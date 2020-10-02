@@ -5,6 +5,7 @@ from ..config import app_config
 from .routes import user as user_blueprint
 from .routes import category as category_blueprint
 from .routes import product as product_blueprint
+from .routes import wishlist as wishlist_blueprint
 
 def create_app(env):
     app = Flask(__name__, instance_relative_config=True)
@@ -14,5 +15,6 @@ def create_app(env):
     app.register_blueprint(user_blueprint, url_prefix="/user")
     app.register_blueprint(category_blueprint, url_prefix="/category")
     app.register_blueprint(product_blueprint, url_prefix="/product")
-    
+    app.register_blueprint(wishlist_blueprint, url_prefix="/wishlist")
+
     return app

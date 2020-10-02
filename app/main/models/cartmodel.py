@@ -8,11 +8,11 @@ class CartModel(db.Model):
     quantity = db.Column(db.Integer)
     db.CheckConstraint(quantity>0)
 
-    def __init__(self, jsn):
-        self.product_id = jsn["product_id"]
-        self.user_id = jsn["user_id"]
-        self.quantity = jsn["quantity"]
-
+    def __init__(self, user_id, product_id, quantity):
+        self.product_id = product_id
+        self.user_id = user_id
+        self.quantity = quantity
+        
     def put(self):
         db.session.add(self)
         db.session.commit()    
