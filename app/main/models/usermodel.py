@@ -47,3 +47,20 @@ class Address(db.Model):
     def put(self):
         db.session.add(self)
         db.session.commit()    
+
+class PaymentInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete = "cascade"))
+    name = db.Column(db.String(100), nullable=False)
+    pay_num = db.Column(db.Integer)
+    pay_type = db.Column(db.String(10))
+
+    def __init__(self, user_id, jsn):
+        self.user_id = user_id
+        self.name = jsn["name"]
+        self.pay_type = jsn["payment_type"]
+        self.pay_num = jsn["payment_number"]
+
+    def put(self):
+        db.session.add(self)
+        db.session.commit()    
