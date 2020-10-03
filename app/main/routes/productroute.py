@@ -1,6 +1,10 @@
 from flask import Blueprint
 from flask import request
-from ..services.productservice import product_add, prod_search, product_cat, product_edit, product_meta_add, product_show, wishlist_add, cart_add
+from ..services.productservice import product_add, prod_search, product_cat, product_edit, product_meta_add, product_show
+from ..services.wishlistservice import wishlist_add
+from ..services.cartservice import cart_add
+from ..services.commentservice import comment_add
+
 
 product = Blueprint("product", __name__)
 
@@ -56,4 +60,10 @@ def addwish(product):
 def addToCart(product):
     auth_code = request.headers["auth_code"]
     res = cart_add(auth_code, product)
+    return {"result":res}
+
+@product.route("/comment/add")
+def comment():
+    auth_code = request.headers["auth_code"]
+    res = comment_add(auth_code, json.request)
     return {"result":res}

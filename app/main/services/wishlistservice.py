@@ -5,6 +5,7 @@ from flask import current_app
 import time
 import jwt
 
+
 def wishlist_show(auth_code):
     try:
         auth_decode = jwt.decode(auth_code, current_app.config["SECRET_KEY"])
@@ -39,3 +40,22 @@ def wishlist_remove(auth_code, product_id):
         return "product removed"
     except Exception as e:
         return str(e)    
+
+def wishlist_add(auth_code, product):
+    try:
+        auth_decode = jwt.decode(auth_code, current_app.config["SECRET_KEY"])
+        if auth_decode['time'] <= time.time():
+            return "session expired login again"
+        user_id = auth_decode["user_id"]
+        product_id = ProductModel.query.filter_by(name=product).first()
+        if not product_id:
+            return "no such product"
+        wl = WishList.query.filter_by(user_id=user_id, product_id=product_id)
+        if not wl:    
+            addToWish = WishList(user_id, product_id)
+            addToWish.put()
+            return "product added to wishlist"
+        return "already in the wishlist"        
+    except Exception as e:
+        return str(e)        
+            

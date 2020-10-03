@@ -5,8 +5,6 @@ import jwt
 from ..models import UserModel
 from ..models import ProductModel, ProductMetaModel, ProductCategories
 from ..models import CategoryModel, Tree
-from ..models import WishList
-from ..models import CartModel
 from ...main import db
 
 
@@ -147,38 +145,3 @@ def prod_search(category):
         return ls
     except Exception as e:
         return str(e)
-
-def wishlist_add(auth_code, product):
-    try:
-        auth_decode = jwt.decode(auth_code, current_app.config["SECRET_KEY"])
-        if auth_decode['time'] <= time.time():
-            return "session expired login again"
-        user_id = auth_decode["user_id"]
-        product_id = ProductModel.query.filter_by(name=product).first()
-        if not product_id:
-            return "no such product"
-        wl = WishList.query.filter_by(user_id=user_id, product_id=product_id)
-        if not wl:    
-            addToWish = WishList(user_id, product_id)
-            addToWish.put()
-            return "product added to wishlist"
-        return "already in the wishlist"        
-    except Exception as e:
-        return str(e)        
-
-def cart_add(auth_code, product):
-    try:
-        auth_decode = jwt.decode(auth_code, current_app.config["SECRET_KEY"])
-        if auth_decode['time'] <= time.time():
-            return "session expired login again"
-        user_id = auth_decode["user_id"]
-        product_id = ProductModel.query.filter_by(name=product).first()
-        ct = CartModel.query.filter_by(user_id=user_id, product_id=product_id)
-        if ct: #i.e. product already in cart then, increase quantity
-            ct.quantity += 1
-            db.session.commit()
-        else:
-            addCart = CartModel(user_id, product_id, 1)
-            addCart.put()    
-    except Exception as e:
-        return str(e)            
